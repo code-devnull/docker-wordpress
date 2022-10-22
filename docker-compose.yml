@@ -22,8 +22,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_USER: developer
+      MYSQL_PASSWORD: 123456789
 
   phpmyadmin:
     image: phpmyadmin:latest
