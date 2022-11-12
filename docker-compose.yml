@@ -9,9 +9,9 @@ services:
       - "8020:80"
     restart: always
     environment:
-      WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: developer
+      WORDPRESS_DB_PASSWORD: 123456789
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - ./html:/var/www/html
@@ -28,7 +28,7 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest
     ports:
-      - '8021:80'
+      - '8090:80'
     restart: always
     environment:
       PMA_HOST: db
