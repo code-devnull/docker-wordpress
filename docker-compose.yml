@@ -2,35 +2,39 @@ version: '3.9'
 
 services:
   wordpress:
-    depends_on:
-      - db
     image: wordpress:latest
+    container_name: wordpress-latest
     ports:
       - "8020:80"
-    restart: always
+    restart: unless-stopped
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_USER: developer
-      WORDPRESS_DB_PASSWORD: 123456789
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
     volumes:
       - ./html:/var/www/html
-
   db:
     image: mysql:8.0
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "33061:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: developer
-      MYSQL_PASSWORD: 123456789
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
   phpmyadmin:
     image: phpmyadmin:latest
     ports:
       - '8090:80'
-    restart: always
+    restart: unless-stopped
     environment:
       PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 1024M
+      MEMORY_LIMIT: 1024M
+      MAX_EXECUTION_TIME: 300
     depends_on:
       - db
